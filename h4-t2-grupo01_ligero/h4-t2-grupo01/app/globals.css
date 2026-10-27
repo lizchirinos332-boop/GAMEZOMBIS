@@ -1,0 +1,1337 @@
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Black+Ops+One&family=Share+Tech+Mono&family=Outfit:wght@400;500;700;900&display=swap');
+
+:root {
+  --bg-black: #06070a;
+  --bg-surface: #0e1117;
+  --panel: rgba(18, 16, 22, 0.88);
+  --panel-card: rgba(26, 17, 24, 0.75);
+  --panel-border: rgba(230, 18, 52, 0.35);
+  --blood-red: #ff123d;
+  --blood-bright: #ff3355;
+  --blood-dark: #800010;
+  --blood-glow: rgba(255, 18, 61, 0.55);
+  --toxic-green: #29f373;
+  --toxic-green-dark: #095922;
+  --toxic-glow: rgba(41, 243, 115, 0.45);
+  --hazard-yellow: #ffb703;
+  --hazard-border: rgba(255, 183, 3, 0.4);
+  --text-main: #f3f4f8;
+  --text-muted: #9aa1b5;
+  --text-dim: #636b80;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--bg-black);
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(138, 3, 3, 0.22) 0%, transparent 60%),
+    radial-gradient(circle at 10% 40%, rgba(30, 5, 10, 0.4) 0%, transparent 50%),
+    linear-gradient(180deg, #07080c 0%, #0c090e 50%, #050608 100%);
+  background-attachment: fixed;
+  color: var(--text-main);
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Scanlines overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  z-index: 9999;
+  opacity: 0.5;
+}
+
+a {
+  color: var(--blood-bright);
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px var(--blood-glow);
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+/* ==================== TYPOGRAPHY ==================== */
+.font-bloody { font-family: 'Nosifer', cursive, fantasy; }
+.font-horror { font-family: 'Creepster', cursive, fantasy; }
+.font-military { font-family: 'Black Ops One', cursive, sans-serif; }
+.font-tech { font-family: 'Share Tech Mono', monospace; }
+
+.blood-title {
+  font-family: 'Nosifer', cursive, fantasy;
+  color: #ff1c43;
+  text-shadow: 
+    0 0 10px rgba(255, 28, 67, 0.9),
+    0 4px 18px rgba(200, 0, 30, 0.8),
+    0 8px 30px rgba(120, 0, 15, 0.95);
+  letter-spacing: 2px;
+  line-height: 1.25;
+}
+
+.horror-heading {
+  font-family: 'Creepster', cursive, fantasy;
+  color: #ff3355;
+  text-shadow: 0 0 12px rgba(255, 51, 85, 0.7);
+  letter-spacing: 3px;
+  font-size: 2.2rem;
+}
+
+/* ==================== TOP NAVIGATION ==================== */
+.nav {
+  background: rgba(10, 8, 14, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--blood-dark);
+  box-shadow: 0 4px 25px rgba(255, 0, 30, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-hazard-stripe {
+  height: 4px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #111,
+    #111 12px,
+    var(--hazard-yellow) 12px,
+    var(--hazard-yellow) 24px
+  );
+}
+
+.nav .container {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+}
+
+.nav .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Black Ops One', cursive, sans-serif;
+  font-size: 1.15rem;
+  color: #fff;
+  letter-spacing: 1px;
+  margin-right: auto;
+  text-decoration: none;
+}
+
+.nav .brand-biohazard {
+  color: var(--toxic-green);
+  font-size: 1.4rem;
+  animation: pulse-bio 2.5s infinite ease-in-out;
+  filter: drop-shadow(0 0 8px var(--toxic-glow));
+}
+
+.nav .brand-name {
+  color: #ff2b4c;
+  text-shadow: 0 0 12px var(--blood-glow);
+}
+
+.nav-links-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-main);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-link:hover {
+  background: rgba(255, 18, 61, 0.18);
+  border-color: var(--blood-bright);
+  color: #fff;
+  box-shadow: 0 0 14px rgba(255, 18, 61, 0.4);
+  transform: translateY(-1px);
+}
+
+.nav-link-play {
+  background: linear-gradient(135deg, #8a0303, #e60026);
+  border-color: #ff3355;
+  color: #fff !important;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(230, 0, 38, 0.6);
+}
+
+/* Botones verdes en nav */
+.nav-btn-green {
+  background: linear-gradient(135deg, #095922 0%, #10b981 100%);
+  color: #fff;
+  border: 1px solid #29f373;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-family: 'Black Ops One', cursive, sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(41, 243, 115, 0.4);
+  transition: all 0.2s ease;
+}
+
+.nav-btn-green:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(41, 243, 115, 0.7);
+  background: linear-gradient(135deg, #0d7530 0%, #29f373 100%);
+  color: #000;
+}
+
+.nav-btn-green-outline {
+  background: rgba(41, 243, 115, 0.08);
+  color: #29f373;
+  border: 1px solid rgba(41, 243, 115, 0.4);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.82rem;
+  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-btn-green-outline:hover {
+  background: rgba(41, 243, 115, 0.2);
+  border-color: #29f373;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(41, 243, 115, 0.5);
+}
+
+.nav-btn-auth {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.82rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.nav-btn-auth:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #ff3355;
+  color: #ff3355;
+}
+
+.nav-status-beacon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--toxic-green);
+  background: rgba(41, 243, 115, 0.08);
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(41, 243, 115, 0.25);
+}
+
+.beacon-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--toxic-green);
+  box-shadow: 0 0 8px var(--toxic-green);
+  animation: blink-dot 1.2s infinite ease-in-out;
+}
+
+/* ==================== HERO SECTION ==================== */
+.hero-banner-container {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  border: 2px solid var(--blood-dark);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 30px rgba(230, 0, 38, 0.25);
+  background: #000;
+}
+
+.hero-bg-image {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  object-position: center 35%;
+  display: block;
+  filter: contrast(1.15) brightness(0.85);
+  transition: transform 6s ease;
+}
+
+.hero-banner-container:hover .hero-bg-image {
+  transform: scale(1.04);
+}
+
+.hero-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 8, 14, 0.4) 0%,
+    rgba(15, 6, 12, 0.75) 55%,
+    rgba(6, 7, 10, 0.98) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 32px 30px;
+}
+
+.hero-alert-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 0, 40, 0.2);
+  border: 1px solid #ff1744;
+  color: #ff4766;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.85rem;
+  padding: 5px 12px;
+  border-radius: 4px;
+  width: fit-content;
+  margin-bottom: 12px;
+  letter-spacing: 1.5px;
+  box-shadow: 0 0 15px rgba(255, 23, 68, 0.35);
+  animation: pulse-border 2s infinite ease-in-out;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  margin-bottom: 12px;
+}
+
+.hero-description {
+  color: #d1d5e5;
+  font-size: 1.05rem;
+  max-width: 750px;
+  line-height: 1.6;
+  margin-bottom: 22px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+
+.hero-cta-group {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ==================== BOTONES VERDES (CREAR / UNIRSE) ==================== */
+.btn-green-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #07521e 0%, #10b981 50%, #29f373 100%);
+  color: #021a0a;
+  font-family: 'Black Ops One', cursive, sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 1.5px;
+  padding: 14px 26px;
+  border-radius: 8px;
+  border: 2px solid #55fca7;
+  box-shadow: 
+    0 0 25px rgba(41, 243, 115, 0.65),
+    inset 0 0 12px rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+.btn-green-primary:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 
+    0 0 40px rgba(41, 243, 115, 0.95),
+    inset 0 0 20px rgba(255, 255, 255, 0.6);
+  color: #000;
+  border-color: #ffffff;
+}
+
+.btn-green-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(9, 89, 34, 0.4);
+  color: #29f373;
+  font-family: 'Black Ops One', cursive, sans-serif;
+  font-size: 1rem;
+  letter-spacing: 1.2px;
+  padding: 14px 22px;
+  border-radius: 8px;
+  border: 2px solid #29f373;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(41, 243, 115, 0.35);
+  transition: all 0.25s ease;
+  text-transform: uppercase;
+}
+
+.btn-green-secondary:hover {
+  background: rgba(41, 243, 115, 0.25);
+  color: #fff;
+  border-color: #fff;
+  box-shadow: 0 0 25px rgba(41, 243, 115, 0.7);
+  transform: translateY(-2px);
+}
+
+.btn-blood-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #8a0303 0%, #d90429 50%, #ff103f 100%);
+  color: #ffffff;
+  font-family: 'Black Ops One', cursive, sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 1.5px;
+  padding: 14px 24px;
+  border-radius: 8px;
+  border: 2px solid #ff4d6d;
+  box-shadow: 
+    0 0 25px rgba(255, 16, 63, 0.65),
+    inset 0 0 12px rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-transform: uppercase;
+}
+
+.btn-blood-primary:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 0 35px rgba(255, 16, 63, 0.95);
+  color: #fff;
+  border-color: #ffffff;
+}
+
+.btn-tactical-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(14, 17, 23, 0.85);
+  color: #e0e5f2;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.92rem;
+  letter-spacing: 1px;
+  padding: 14px 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-tactical-outline:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--hazard-yellow);
+  color: var(--hazard-yellow);
+  box-shadow: 0 0 15px rgba(255, 183, 3, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ==================== STATS STRIP ==================== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background: var(--panel-card);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--blood-bright);
+}
+
+.stat-card::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--blood-red), transparent);
+}
+
+.stat-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat-value {
+  font-family: 'Black Ops One', cursive, sans-serif;
+  font-size: 1.6rem;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.stat-value-blood {
+  color: var(--blood-bright);
+  text-shadow: 0 0 12px var(--blood-glow);
+}
+
+.stat-value-toxic {
+  color: var(--toxic-green);
+  text-shadow: 0 0 12px var(--toxic-glow);
+}
+
+.stat-value-hazard {
+  color: var(--hazard-yellow);
+  text-shadow: 0 0 12px rgba(255, 183, 3, 0.4);
+}
+
+/* ==================== SALAS BANNERS ==================== */
+.sala-info-banner {
+  background: linear-gradient(135deg, rgba(9, 89, 34, 0.2), rgba(16, 22, 18, 0.85));
+  border: 1px solid rgba(41, 243, 115, 0.4);
+  border-radius: 12px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.sala-info-icon {
+  font-size: 2.2rem;
+  filter: drop-shadow(0 0 10px var(--toxic-green));
+}
+
+.sala-banner-box {
+  background: rgba(9, 89, 34, 0.25);
+  border: 2px solid var(--toxic-green);
+  border-radius: 10px;
+  padding: 14px 20px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  box-shadow: 0 0 20px rgba(41, 243, 115, 0.35);
+}
+
+/* ==================== SECTIONS & CARDS ==================== */
+.section-wrapper {
+  margin-bottom: 36px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 18, 61, 0.25);
+  position: relative;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.section-header::after {
+  content: "";
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 120px;
+  height: 2px;
+  background: var(--blood-bright);
+  box-shadow: 0 0 8px var(--blood-bright);
+}
+
+.section-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--toxic-green);
+  background: rgba(41, 243, 115, 0.1);
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(41, 243, 115, 0.2);
+}
+
+/* ==================== SURVIVOR CARDS ==================== */
+.survivors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.survivor-card {
+  background: linear-gradient(145deg, rgba(24, 15, 20, 0.95), rgba(12, 10, 16, 0.95));
+  border: 1px solid rgba(255, 20, 50, 0.3);
+  border-radius: 14px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+  text-decoration: none !important;
+}
+
+.survivor-card:hover {
+  transform: translateY(-6px);
+  border-color: #ff2b4c;
+  box-shadow: 
+    0 12px 32px rgba(0, 0, 0, 0.85),
+    0 0 25px rgba(255, 43, 76, 0.45);
+}
+
+.survivor-badge-rank {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-family: 'Black Ops One', cursive, sans-serif;
+  font-size: 0.82rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--hazard-yellow);
+}
+
+.survivor-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.survivor-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #40040c, #7a0b1c);
+  border: 2px solid #ff2b4c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  box-shadow: 0 0 14px rgba(255, 43, 76, 0.4);
+}
+
+.survivor-info h3 {
+  font-family: 'Black Ops One', cursive, sans-serif;
+  font-size: 1.35rem;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.survivor-status-tag {
+  display: inline-block;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--toxic-green);
+  text-transform: uppercase;
+}
+
+.survivor-stats-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.survivor-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.survivor-row strong {
+  font-family: 'Share Tech Mono', monospace;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.survivor-footer-action {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--blood-bright);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* ==================== ARSENAL & WEAPONS ==================== */
+.weapons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.weapon-card {
+  background: rgba(16, 18, 24, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.weapon-card:hover {
+  border-color: var(--hazard-yellow);
+  background: rgba(22, 24, 32, 0.95);
+  transform: translateY(-2px);
+}
+
+.weapon-icon-box {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.weapon-card h4 {
+  font-family: 'Black Ops One', cursive, sans-serif;
+  color: #fff;
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.weapon-key-badge {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  background: rgba(255, 183, 3, 0.15);
+  color: var(--hazard-yellow);
+  border: 1px solid var(--hazard-border);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.weapon-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ==================== TECHNICAL TERMINAL HUD ==================== */
+.tech-terminal {
+  background: rgba(8, 10, 14, 0.95);
+  border: 1px solid rgba(41, 243, 115, 0.3);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(41, 243, 115, 0.1);
+  margin-bottom: 30px;
+}
+
+.tech-terminal-header {
+  background: rgba(14, 20, 18, 0.9);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(41, 243, 115, 0.2);
+}
+
+.tech-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.tech-dot { width: 10px; height: 10px; border-radius: 50%; }
+.tech-dot.red { background: #ff2b4c; }
+.tech-dot.yellow { background: #ffb703; }
+.tech-dot.green { background: #29f373; }
+
+.tech-terminal-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--toxic-green);
+  letter-spacing: 1.5px;
+  margin-left: 6px;
+  text-transform: uppercase;
+}
+
+.tech-terminal-body {
+  padding: 24px;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.tech-feature-card {
+  background: rgba(18, 24, 22, 0.4);
+  border: 1px solid rgba(41, 243, 115, 0.15);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.tech-feature-card h5 {
+  font-family: 'Share Tech Mono', monospace;
+  color: #fff;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tech-feature-card p {
+  font-size: 0.84rem;
+  color: #a0aec0;
+  line-height: 1.55;
+}
+
+/* ==================== FOOTER ==================== */
+.footer {
+  background: rgba(8, 7, 10, 0.95);
+  border-top: 1px solid rgba(255, 18, 61, 0.25);
+  padding: 30px 20px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.footer-content {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.footer-warning {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--blood-bright);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.footer-info {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ==================== GAME CANVAS & FULLSCREEN SYSTEM ==================== */
+.game-wrapper-container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #ff1744;
+  box-shadow: 0 0 35px rgba(255, 23, 68, 0.35);
+}
+
+.game-wrapper-container.is-fullscreen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  z-index: 999999;
+  border-radius: 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+}
+
+.game-hud-bar {
+  background: rgba(14, 18, 16, 0.95);
+  border-bottom: 1px solid rgba(41, 243, 115, 0.3);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btn-fullscreen-toggle {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.btn-fullscreen-toggle:hover {
+  background: var(--toxic-green);
+  color: #000;
+  border-color: #fff;
+  box-shadow: 0 0 12px var(--toxic-glow);
+}
+
+.gamebox {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  user-select: none;
+  touch-action: none;
+}
+
+.gamebox canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
+/* ==================== DOSSIER CARD ==================== */
+.dossier-card {
+  background: linear-gradient(145deg, #181014, #0f0a0c);
+  border: 2px solid var(--blood-bright);
+  border-radius: 16px;
+  padding: 32px;
+  margin: 20px 0;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 28, 67, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.dossier-stamp {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  border: 3px solid #ff2b4c;
+  color: #ff2b4c;
+  font-family: 'Black Ops One', cursive, sans-serif;
+  font-size: 1.1rem;
+  padding: 6px 16px;
+  border-radius: 8px;
+  transform: rotate(-10deg);
+  letter-spacing: 2px;
+  box-shadow: 0 0 12px rgba(255, 43, 76, 0.4);
+}
+
+/* ==================== MODAL GLOBAL SYSTEM ==================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 5, 8, 0.88);
+  backdrop-filter: blur(10px);
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-dialog {
+  background: linear-gradient(145deg, #161016, #0d0a10);
+  border: 2px solid rgba(255, 23, 68, 0.5);
+  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.9), 0 0 35px rgba(255, 23, 68, 0.35);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 540px;
+  padding: 28px;
+  position: relative;
+  animation: scaleUp 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: #ff123d;
+  border-color: #fff;
+  box-shadow: 0 0 10px #ff123d;
+}
+
+.modal-header {
+  margin-bottom: 20px;
+}
+
+.modal-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+}
+
+.modal-tab {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.88rem;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.modal-tab.active {
+  background: rgba(255, 18, 61, 0.2);
+  color: #ff3355;
+  border: 1px solid #ff3355;
+}
+
+.modal-tab.active-green {
+  background: rgba(41, 243, 115, 0.15);
+  color: #29f373;
+  border: 1px solid #29f373;
+}
+
+.modal-alert {
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  margin-bottom: 16px;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.modal-alert.error {
+  background: rgba(255, 18, 61, 0.15);
+  border: 1px solid #ff123d;
+  color: #ff5577;
+}
+
+.modal-alert.success {
+  background: rgba(41, 243, 115, 0.15);
+  border: 1px solid #29f373;
+  color: #55fca7;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.form-input, .form-select {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus, .form-select:focus {
+  border-color: var(--toxic-green);
+  box-shadow: 0 0 10px var(--toxic-glow);
+}
+
+.form-select option {
+  background: #111;
+  color: #fff;
+}
+
+.avatar-picker {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.avatar-option {
+  width: 44px;
+  height: 44px;
+  font-size: 1.4rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s ease;
+}
+
+.avatar-option:hover, .avatar-option.selected {
+  background: rgba(41, 243, 115, 0.2);
+  border-color: var(--toxic-green);
+  transform: scale(1.1);
+}
+
+.active-user-banner {
+  background: rgba(41, 243, 115, 0.1);
+  border: 1px solid var(--toxic-green);
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.saved-players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.player-item {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.player-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--toxic-green);
+}
+
+.player-item.current {
+  border-color: var(--toxic-green);
+  background: rgba(41, 243, 115, 0.1);
+}
+
+.badge-active {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  background: var(--toxic-green);
+  color: #000;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* Room creation specific */
+.room-create-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(41, 243, 115, 0.3);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+.room-code-display {
+  font-family: 'Black Ops One', cursive, sans-serif;
+  font-size: 2.8rem;
+  color: var(--toxic-green);
+  text-shadow: 0 0 20px var(--toxic-glow);
+  letter-spacing: 4px;
+  margin: 12px 0;
+}
+
+.room-url-preview {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  word-break: break-all;
+}
+
+.room-url-preview code {
+  color: var(--hazard-yellow);
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-border {
+  0%, 100% { box-shadow: 0 0 15px rgba(255, 18, 61, 0.4); }
+  50% { box-shadow: 0 0 28px rgba(255, 18, 61, 0.85); }
+}
+
+@keyframes pulse-bio {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px var(--toxic-glow)); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 16px var(--toxic-green)); }
+}
+
+@keyframes blink-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.85); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-bg-image { height: 380px; }
+  .hero-gradient-overlay { padding: 20px 16px; }
+  .hero-cta-group { flex-direction: column; align-items: stretch; }
+  .btn-green-primary, .btn-green-secondary, .btn-blood-primary, .btn-tactical-outline {
+    justify-content: center;
+  }
+}
+
+/* ==================== SOUNDBOARD & AUDIO HUD ==================== */
+.btn-soundboard-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  font-size: 0.82rem;
+  font-family: 'Share Tech Mono', monospace;
+  transition: all 0.18s ease;
+  text-align: left;
+}
+
+.btn-soundboard-item:hover {
+  background: rgba(41, 243, 115, 0.12);
+  border-color: var(--toxic-green);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(41, 243, 115, 0.2);
+}
+
+.btn-soundboard-item:active {
+  transform: translateY(0);
+}
+
+.sound-tag {
+  font-size: 0.68rem;
+  color: var(--hazard-yellow);
+  opacity: 0.85;
+}
+
+.btn-audio-hud {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(41, 243, 115, 0.35);
+  color: var(--toxic-green);
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-family: 'Share Tech Mono', monospace;
+  transition: all 0.2s ease;
+}
+
+.btn-audio-hud:hover {
+  background: rgba(41, 243, 115, 0.2);
+  border-color: var(--toxic-green);
+  color: #fff;
+  box-shadow: 0 0 10px var(--toxic-glow);
+}
+
+.btn-audio-hud.is-muted {
+  border-color: rgba(255, 18, 61, 0.5);
+  color: var(--blood-bright);
+}
+
+.btn-audio-hud.is-muted:hover {
+  background: rgba(255, 18, 61, 0.2);
+  box-shadow: 0 0 10px var(--blood-glow);
+}
+
